@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\ApiUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JWTController;
@@ -28,3 +29,11 @@ Route::group(['middleware' => 'api'], function($router) {
     Route::post('/refresh', [JWTController::class, 'refresh']);
     Route::post('/profile', [JWTController::class, 'profile']);
 });
+
+
+
+Route::get("/index", [ApiUserController::class, "index"]);
+Route::get("/show/{id}", [ApiUserController::class, "show"]);
+Route::post("/store", [ApiUserController::class, "store"]);
+Route::post("/update/{id}", [ApiUserController::class, "update"]);
+Route::get("/destroy/{id}", [ApiUserController::class, "destroy"]);
