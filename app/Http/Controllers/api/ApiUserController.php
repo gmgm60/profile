@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ApiUserController extends Controller
 {
@@ -54,9 +55,9 @@ class ApiUserController extends Controller
     }
 
     // show one user
-    public function show($id)
+    public function profile(Request $request)
     {
-        $data = User::find($id);
+        $data = JWTAuth::authenticate($request->token);
         if(!is_null($data)){
             return response()->json(["data" => $data, "message" => "success", "status" => 200]);
         }
@@ -101,7 +102,7 @@ class ApiUserController extends Controller
     }
 
     // delete one user
-    public function destroy($id)
+    public function delete($id)
     {
         if(User::find($id)){
             $data = User::find($id);

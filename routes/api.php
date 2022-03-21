@@ -30,10 +30,13 @@ Route::group(['middleware' => 'api'], function($router) {
     Route::post('/profile', [JWTController::class, 'profile']);
 });
 
+Route::group(['middleware' => ['jwt.verify']], function() {
+    // Route::get("/index", [ApiUserController::class, "index"]);
+    Route::get("/profile", [ApiUserController::class, "profile"]);
+    Route::post("/profile", [ApiUserController::class, "store"]);
+    Route::post("/update", [ApiUserController::class, "update"]);
+    Route::get("/delete", [ApiUserController::class, "delete"]);
+});
 
 
-Route::get("/index", [ApiUserController::class, "index"]);
-Route::get("/show/{id}", [ApiUserController::class, "show"]);
-Route::post("/store", [ApiUserController::class, "store"]);
-Route::post("/update/{id}", [ApiUserController::class, "update"]);
-Route::get("/destroy/{id}", [ApiUserController::class, "destroy"]);
+
